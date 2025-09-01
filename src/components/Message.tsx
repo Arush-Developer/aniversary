@@ -43,7 +43,7 @@ I love you, forever & always💖❤🌍
         transition={{ delay: 4, duration: 2 }}
         className="mt-8 text-gray-600 italic"
       >
-        – With endless love, Sahil Aggarwal
+        – With endless love, Tera Dudu
       </motion.p>
     </div>
   );
