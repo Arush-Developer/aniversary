@@ -1,31 +1,54 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from 'react'
+import Header from './components/Header'
+import Intro from './components/Intro'
+import FunStuff from './components/FunStuff'
+import Timeline from './components/Timeline'
+import Message from './components/Message'
+import FooterCredit from './components/FooterCredit'
+import AudioPlayer from './components/AudioPlayer'
 
-function App() {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+export default function App() {
+  const [stage, setStage] = useState<'intro' | 'fun' | 'timeline' | 'message' | 'finale'>('intro')
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      audio.volume = 0.4; // Set volume (0.0 - 1.0)
-      audio.play().catch((err) => {
-        console.log("Autoplay blocked, waiting for user interaction:", err);
-      });
-    }
-  }, []);
+    const onFinale = () => setStage('finale')
+    window.addEventListener('finale-trigger', onFinale)
+    return () => window.removeEventListener('finale-trigger', onFinale)
+  }, [])
 
   return (
-    <div className="App">
-      {/* Hidden audio that plays continuously */}
-      <audio ref={audioRef} src="/Background.mp3" autoPlay loop />
+    <div className="min-h-screen">
+      <Header />
+      <main>
+        {stage === 'intro' && <Intro onBegin={() => setStage('fun')} />}
 
-      <h1 className="text-3xl font-bold text-center mt-10">
-        🎵 Background Music is Playing 🎵
-      </h1>
-      <p className="text-center text-lg mt-4">
-        The music will loop throughout your app.
-      </p>
+        {stage === 'fun' && (
+          <>
+            <FunStuff onYes={() => setStage('timeline')} />
+          </>
+        )}
+
+        {stage === 'timeline' && (
+          <>
+            <Timeline />
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={() => setStage('message')}
+                className="rounded-full bg-rose-600 text-white px-6 py-3"
+              >
+                Read my letter
+              </button>
+            </div>
+          </>
+        )}
+
+        {stage === 'message' && <Message />}
+
+        {stage === 'finale' && <FooterCredit />}
+      </main>
+
+      {/* 🎵 Audio plays across all pages */}
+      <AudioPlayer />
     </div>
-  );
+  )
 }
-
-export default App;
