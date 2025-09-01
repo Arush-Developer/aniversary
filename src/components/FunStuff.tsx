@@ -1,34 +1,40 @@
 // src/components/FunPage.jsx
-import React from "react";
+import React, { useState } from "react";
 
-const FunPage = () => {
-  const funImages = [
-    { src: "/images/fun1.png", caption: "That time we laughed too much 🤭" },
-    { src: "/images/fun2.png", caption: "Crazy memory unlocked 😜" },
-    { src: "/images/fun3.png", caption: "Unstoppable vibes 🎉" },
-  ];
+const FunPage = ({ onNext }) => {
+  const [noPosition, setNoPosition] = useState({ top: "50%", left: "60%" });
+
+  const moveNoButton = () => {
+    const randomTop = Math.floor(Math.random() * 70) + 10;
+    const randomLeft = Math.floor(Math.random() * 70) + 10;
+    setNoPosition({ top: `${randomTop}%`, left: `${randomLeft}%` });
+  };
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-400 text-white px-6">
-      <h2 className="text-4xl font-extrabold mb-10 drop-shadow-lg">
-        Fun Times Together 😍
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
-        {funImages.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white/20 backdrop-blur-md rounded-2xl shadow-lg p-4 text-center transform hover:scale-105 transition duration-300"
-          >
-            <img
-              src={item.src}
-              alt={item.caption}
-              className="rounded-xl mb-4 shadow-md"
-            />
-            <p className="text-lg font-medium">{item.caption}</p>
-          </div>
-        ))}
+    <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-200 text-center relative overflow-hidden">
+      <h1 className="text-3xl md:text-5xl font-bold mb-6 text-gray-800">
+        Are you ready to go on an endless lifetime journey with me? 💖
+      </h1>
+      <div className="flex gap-6 mt-6 relative w-full h-40">
+        {/* Yes Button */}
+        <button
+          onClick={onNext}
+          className="px-8 py-3 bg-green-500 text-white font-bold rounded-xl shadow-lg hover:bg-green-600 transition-all text-lg"
+        >
+          Yes 💍
+        </button>
+
+        {/* No Button that moves */}
+        <button
+          style={{ position: "absolute", top: noPosition.top, left: noPosition.left }}
+          onMouseEnter={moveNoButton}
+          onClick={moveNoButton}
+          className="px-8 py-3 bg-red-500 text-white font-bold rounded-xl shadow-lg rounded-xl transition-all text-lg"
+        >
+          No 🚫
+        </button>
       </div>
-    </section>
+    </div>
   );
 };
 
