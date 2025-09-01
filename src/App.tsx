@@ -1,35 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import Header from './components/Header'
-import Intro from './components/Intro'
-import FunStuff from './components/FunStuff'
-import Timeline from './components/Timeline'
-import Message from './components/Message'
-import FooterCredit from './components/FooterCredit'
-import AudioPlayer from './components/AudioPlayer'
+import React, { useEffect, useRef } from "react";
 
-export default function App() {
-  const [stage, setStage] = useState<'intro'|'fun'|'timeline'|'message'|'finale'>('intro')
+function App() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    const onFinale = () => setStage('finale')
-    window.addEventListener('finale-trigger', onFinale)
-    return () => window.removeEventListener('finale-trigger', onFinale)
-  }, [])
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = 0.4; // Set volume (0.0 - 1.0)
+      audio.play().catch((err) => {
+        console.log("Autoplay blocked, waiting for user interaction:", err);
+      });
+    }
+  }, []);
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      <main>
-        <Intro onBegin={() => setStage('fun')} />
-        {stage === 'fun' && <FunStuff />}
-        {stage === 'fun' && <div className="flex justify-center mt-6"><button onClick={() => setStage('timeline')} className="rounded-full bg-rose-500 text-white px-6 py-3">See our memories</button></div>}
-        {stage === 'timeline' && <Timeline />}
-        {stage === 'timeline' && <div className="flex justify-center mt-6"><button onClick={() => setStage('message')} className="rounded-full bg-rose-600 text-white px-6 py-3">Read my letter</button></div>}
-        {stage === 'message' && <Message />}
-        {stage === 'finale' && <FooterCredit />}
-      </main>
+    <div className="App">
+      {/* Hidden audio that plays continuously */}
+      <audio ref={audioRef} src="/Background.mp3" autoPlay loop />
 
-      <AudioPlayer />
+      <h1 className="text-3xl font-bold text-center mt-10">
+        🎵 Background Music is Playing 🎵
+      </h1>
+      <p className="text-center text-lg mt-4">
+        The music will loop throughout your app.
+      </p>
     </div>
-  )
+  );
 }
+
+export default App;
