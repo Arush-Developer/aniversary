@@ -2,6 +2,12 @@
 import React from "react";
 
 const FunPage = () => {
+  const funImages = [
+    { src: "/images/fun1.png", caption: "That time we laughed too much 🤭" },
+    { src: "/images/fun2.png", caption: "Crazy memory unlocked 😜" },
+    { src: "/images/fun3.png", caption: "Unstoppable vibes 🎉" },
+  ];
+
   return (
     <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-400 text-white px-6">
       <h2 className="text-4xl font-extrabold mb-10 drop-shadow-lg">
