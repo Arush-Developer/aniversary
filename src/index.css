@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --script: "Dancing Script", cursive;
+  --ui: "Montserrat", sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  background: linear-gradient(180deg,#fff7fb 0%, #fff6ee 50%, #fff1f8 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3 { font-family: var(--script); }
+body, p, button, input, pre { font-family: var(--ui); }
+
+/* cursor heart */
+.ch {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%,-50%) rotate(25deg);
+  border-radius: 6px;
+  background: radial-gradient(circle at 30% 30%, #fff0f5, #ff9fb1);
+  pointer-events: none;
+  z-index: 9999;
+  animation: ch-fade 0.9s linear forwards;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
+}
+@keyframes ch-fade { 0%{ opacity: 1; transform: translate(-50%,-50%) scale(1);} 100%{ opacity:0; transform: translate(-50%,-180%) scale(0.6);} }
+
+/* petals */
+.petal { position:absolute; width:18px; height:18px; border-radius:8px; background: radial-gradient(circle at 30% 30%, #ffd6e0, #ff9fc1); opacity:0.9; animation: drift linear infinite; }
+@keyframes drift { from{ transform: translateY(-10vh) rotate(0deg);} to{ transform: translateY(120vh) rotate(360deg);} }
+
+/* timeline */
+.timeline-line { position:absolute; left:44px; top:8%; width:6px; background: linear-gradient(180deg,#ffb6c1,#ffc9d7 60%, #ffd6a5); border-radius:999px; transform-origin: top; transition: height 420ms cubic-bezier(.2,.9,.25,1); z-index:1; }
+.timeline-card { transition: transform 360ms ease, opacity 360ms ease; }
